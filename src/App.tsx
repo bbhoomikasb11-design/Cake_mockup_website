@@ -2,10 +2,14 @@ import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 
+// Providers
+import { OrderProvider } from '@/context/OrderContext';
+
 // Layout
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { FloatingCTA } from '@/components/common/FloatingCTA';
+import { OrderDrawer } from '@/components/order/OrderDrawer';
 
 // Motion
 import { Preloader } from '@/components/motion/Preloader';
@@ -77,25 +81,28 @@ export const App: React.FC = () => {
 
   return (
     <BrowserRouter>
-      <Preloader onComplete={() => setIsPreloaderDone(true)} />
-      
-      {isPreloaderDone && (
-        <SmoothScroll>
-          <CustomCursor />
-          <ScrollProgressLine />
-          
-          <div className="min-h-screen flex flex-col justify-between bg-cream text-espresso relative">
-            <Navbar />
+      <OrderProvider>
+        <Preloader onComplete={() => setIsPreloaderDone(true)} />
+        
+        {isPreloaderDone && (
+          <SmoothScroll>
+            <CustomCursor />
+            <ScrollProgressLine />
             
-            <main className="flex-1">
-              <AnimatedRoutes />
-            </main>
-            
-            <Footer />
-            <FloatingCTA />
-          </div>
-        </SmoothScroll>
-      )}
+            <div className="min-h-screen flex flex-col justify-between bg-cream text-espresso relative">
+              <Navbar />
+              
+              <main className="flex-1">
+                <AnimatedRoutes />
+              </main>
+              
+              <Footer />
+              <FloatingCTA />
+              <OrderDrawer />
+            </div>
+          </SmoothScroll>
+        )}
+      </OrderProvider>
     </BrowserRouter>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { ArrowUpRight, ArrowRight } from 'lucide-react';
-import { getWhatsAppLink } from '@/lib/whatsapp';
+import { useOrder } from '@/context/OrderContext';
 
 interface ButtonProps {
   children: React.ReactNode;
@@ -9,6 +9,7 @@ interface ButtonProps {
   onClick?: () => void;
   isWhatsApp?: boolean;
   cakeName?: string;
+  flavour?: string;
   className?: string;
   icon?: 'arrow-up-right' | 'arrow-right' | 'none';
 }
@@ -20,13 +21,13 @@ export const Button: React.FC<ButtonProps> = ({
   onClick,
   isWhatsApp = false,
   cakeName,
+  flavour,
   className = '',
   icon = 'arrow-right',
 }) => {
   const buttonRef = useRef<HTMLAnchorElement & HTMLButtonElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
-
-  const targetHref = isWhatsApp ? getWhatsAppLink(cakeName) : href;
+  const { openOrder } = useOrder();
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!buttonRef.current || window.innerWidth < 768) return;
@@ -38,6 +39,14 @@ export const Button: React.FC<ButtonProps> = ({
 
   const handleMouseLeave = () => {
     setPosition({ x: 0, y: 0 });
+  };
+
+  const handleClick = (e: React.MouseEvent) => {
+    if (isWhatsApp) {
+      e.preventDefault();
+      openOrder({ cakeName, flavour });
+    }
+    onClick?.();
   };
 
   const RenderIcon = () => {
@@ -71,13 +80,13 @@ export const Button: React.FC<ButtonProps> = ({
     transform: `translate3d(${position.x}px, ${position.y}px, 0)`,
   };
 
-  if (targetHref) {
+  if (href && !isWhatsApp) {
     return (
       <a
         ref={buttonRef}
-        href={targetHref}
-        target={targetHref.startsWith('http') ? '_blank' : undefined}
-        rel={targetHref.startsWith('http') ? 'noopener noreferrer' : undefined}
+        href={href}
+        target={href.startsWith('http') ? '_blank' : undefined}
+        rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
         onClick={onClick}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
@@ -93,7 +102,7 @@ export const Button: React.FC<ButtonProps> = ({
   return (
     <button
       ref={buttonRef}
-      onClick={onClick}
+      onClick={handleClick}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={motionStyle}
