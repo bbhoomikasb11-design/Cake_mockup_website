@@ -22,22 +22,37 @@ export const Navbar: React.FC = () => {
     setIsMenuOpen(false);
   }, [location.pathname]);
 
+  // Determine if current hero section is dark (Home, Cake, Gallery are dark heroes)
+  const isDarkHeroPage = location.pathname === '/' || location.pathname === '/cake' || location.pathname === '/gallery';
+  const isLightMode = isScrolled || (location.pathname === '/about' && !isScrolled);
+
   return (
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled
-            ? 'bg-cream/85 backdrop-blur-md py-3 shadow-sm border-b border-sand/30'
-            : 'bg-transparent py-6'
+            ? 'bg-cream/95 backdrop-blur-md py-3 shadow-md border-b border-sand/40'
+            : isDarkHeroPage
+            ? 'bg-gradient-to-b from-espresso/80 via-espresso/30 to-transparent py-6'
+            : 'bg-cream/60 backdrop-blur-sm py-6'
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
+          
           {/* Logo wordmark */}
           <NavLink to="/" className="flex flex-col group text-left">
-            <span className="font-serif text-xl md:text-2xl tracking-wide text-espresso font-medium group-hover:text-bronze transition-colors">
+            <span
+              className={`font-serif text-xl md:text-2xl tracking-wide font-medium transition-colors ${
+                isLightMode ? 'text-espresso group-hover:text-bronze' : 'text-cream group-hover:text-blush'
+              }`}
+            >
               Cream On Top
             </span>
-            <span className="text-[9px] font-sans tracking-widest-custom uppercase text-mocha/70 font-semibold -mt-1">
+            <span
+              className={`text-[9px] font-sans tracking-widest-custom uppercase font-semibold -mt-1 ${
+                isLightMode ? 'text-mocha/80' : 'text-sand/80'
+              }`}
+            >
               BY NEHA GUPTA
             </span>
           </NavLink>
@@ -50,13 +65,19 @@ export const Navbar: React.FC = () => {
                 <NavLink
                   key={item.path}
                   to={item.path}
-                  className="relative text-xs uppercase font-sans tracking-widest font-medium text-mocha hover:text-bronze transition-colors py-1 flex flex-col items-center"
+                  className={`relative text-xs uppercase font-sans tracking-widest font-semibold py-1 flex flex-col items-center transition-colors ${
+                    isLightMode
+                      ? isActive ? 'text-bronze' : 'text-espresso hover:text-bronze'
+                      : isActive ? 'text-rose' : 'text-cream hover:text-rose'
+                  }`}
                 >
                   {item.label}
                   {isActive && (
                     <motion.span
                       layoutId="activeDot"
-                      className="w-1.5 h-1.5 rounded-full bg-bronze absolute -bottom-1"
+                      className={`w-1.5 h-1.5 rounded-full absolute -bottom-1 ${
+                        isLightMode ? 'bg-bronze' : 'bg-rose'
+                      }`}
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   )}
@@ -68,7 +89,16 @@ export const Navbar: React.FC = () => {
           {/* Desktop Order Now + Mobile Hamburger */}
           <div className="flex items-center space-x-4">
             <div className="hidden sm:block">
-              <Button isWhatsApp variant="outline-pill" icon="arrow-right">
+              <Button
+                isWhatsApp
+                variant="outline-pill"
+                icon="arrow-right"
+                className={
+                  isLightMode
+                    ? 'border-mocha/40 text-espresso hover:bg-espresso hover:text-cream'
+                    : 'border-sand/50 text-cream bg-espresso/30 backdrop-blur hover:bg-cream hover:text-espresso hover:border-cream shadow-md'
+                }
+              >
                 Order Now
               </Button>
             </div>
@@ -76,20 +106,30 @@ export const Navbar: React.FC = () => {
             {/* Circular Hamburger Button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="w-10 h-10 rounded-full border border-mocha/30 bg-cream/50 backdrop-blur flex flex-col items-center justify-center space-y-1 hover:border-bronze hover:bg-cream transition-all duration-300 z-50 focus:outline-none"
+              className={`w-10 h-10 rounded-full border flex flex-col items-center justify-center space-y-1 transition-all duration-300 z-50 focus:outline-none shadow-sm ${
+                isLightMode
+                  ? 'border-mocha/30 bg-cream/80 text-espresso hover:border-bronze hover:bg-cream'
+                  : 'border-sand/40 bg-espresso/50 backdrop-blur text-cream hover:border-bronze hover:bg-bronze'
+              }`}
               aria-label="Toggle Menu"
             >
               <motion.span
                 animate={isMenuOpen ? { rotate: 45, y: 5 } : { rotate: 0, y: 0 }}
-                className="w-4 h-[1.5px] bg-mocha block transition-transform"
+                className={`w-4 h-[1.5px] block transition-transform ${
+                  isLightMode || isMenuOpen ? 'bg-mocha' : 'bg-cream'
+                }`}
               />
               <motion.span
                 animate={isMenuOpen ? { opacity: 0 } : { opacity: 1 }}
-                className="w-4 h-[1.5px] bg-mocha block transition-opacity"
+                className={`w-4 h-[1.5px] block transition-opacity ${
+                  isLightMode ? 'bg-mocha' : 'bg-cream'
+                }`}
               />
               <motion.span
                 animate={isMenuOpen ? { rotate: -45, y: -5 } : { rotate: 0, y: 0 }}
-                className="w-4 h-[1.5px] bg-mocha block transition-transform"
+                className={`w-4 h-[1.5px] block transition-transform ${
+                  isLightMode || isMenuOpen ? 'bg-mocha' : 'bg-cream'
+                }`}
               />
             </button>
           </div>
@@ -110,7 +150,7 @@ export const Navbar: React.FC = () => {
             <div className="absolute inset-0 bg-[radial-gradient(#B98A5B_1px,transparent_1px)] [background-size:24px_24px] opacity-10 pointer-events-none" />
 
             <div className="max-w-4xl mx-auto w-full flex-1 flex flex-col justify-center my-auto">
-              <span className="text-[10px] font-sans tracking-widest-custom text-sand/60 uppercase mb-8 block">
+              <span className="text-[10px] font-sans tracking-widest-custom text-sand/60 uppercase mb-8 block font-semibold">
                 NAVIGATION
               </span>
               <ul className="space-y-6">

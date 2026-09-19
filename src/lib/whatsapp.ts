@@ -26,7 +26,7 @@ export function buildOrderWhatsAppMessage(details: OrderFormDetails): string {
     `Desired weight: ${details.weight || 'Standard'}`,
     `Preferred flavour: ${details.flavour || 'Not sure yet'}`,
     `Cake idea / theme: ${details.themeIdea || details.cakeReference || 'Custom design'}`,
-    `Message on cake: ${details.cakeMessage || 'None'}`,
+    `Writing / Name on cake: ${details.cakeMessage || 'None'}`,
     `Delivery/Pickup: ${details.deliveryOption || 'Pickup'}${details.deliveryArea ? ` (${details.deliveryArea})` : ''}`,
     `Notes: ${details.notes || 'None'}`,
     "",

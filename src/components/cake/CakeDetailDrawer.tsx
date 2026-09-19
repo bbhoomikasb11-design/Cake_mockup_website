@@ -32,15 +32,15 @@ export const CakeDetailDrawer: React.FC<CakeDetailDrawerProps> = ({ cake, onClos
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            className="w-screen max-w-md bg-cream text-espresso shadow-2xl overflow-y-auto flex flex-col justify-between p-8 border-l border-sand"
+            className="w-screen max-w-md bg-cream text-espresso shadow-2xl flex flex-col h-full border-l border-sand relative overflow-hidden"
           >
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-sand pb-4">
+            <div className="flex items-center justify-between border-b border-sand p-6 flex-shrink-0 bg-cream/95 backdrop-blur z-10">
               <div>
                 <span className="text-[9px] font-mono tracking-widest uppercase text-bronze font-semibold">
                   {cake.category}
                 </span>
-                <h3 className="font-serif text-3xl text-espresso font-medium">{cake.title}</h3>
+                <h3 className="font-serif text-2xl text-espresso font-medium">{cake.title}</h3>
               </div>
               <button
                 onClick={onClose}
@@ -51,8 +51,9 @@ export const CakeDetailDrawer: React.FC<CakeDetailDrawerProps> = ({ cake, onClos
               </button>
             </div>
 
-            {/* Cake Image Arch */}
-            <div className="py-6">
+            {/* Scrollable Body */}
+            <div className="flex-1 overflow-y-auto p-6 space-y-6">
+              {/* Cake Image Arch */}
               <div className="w-full aspect-[4/5] rounded-arch overflow-hidden shadow-xl border border-sand bg-cocoa">
                 <PlaceholderImage
                   src={cake.image}
@@ -62,49 +63,48 @@ export const CakeDetailDrawer: React.FC<CakeDetailDrawerProps> = ({ cake, onClos
                   className="w-full h-full object-cover"
                 />
               </div>
-            </div>
 
-            {/* Description & Occasions */}
-            <div className="space-y-6">
-              <p className="font-script text-rose text-2xl">{cake.subtitle}</p>
+              {/* Description & Occasions */}
+              <div className="space-y-4">
+                <p className="font-script text-rose text-2xl">{cake.subtitle}</p>
 
-              <p className="font-sans text-xs text-mocha leading-relaxed">
-                Handcrafted with premium ingredients, bespoke design elements, and custom color palettes to match your celebration perfectly.
-              </p>
+                <p className="font-sans text-xs text-mocha leading-relaxed">
+                  Handcrafted with premium ingredients, bespoke design elements, and custom color palettes to match your celebration perfectly.
+                </p>
 
-              <div className="space-y-2 bg-sand/30 p-4 rounded-xl border border-sand/60">
-                <div className="flex items-center gap-2 text-xs font-sans text-espresso font-semibold">
-                  <Sparkles className="w-4 h-4 text-bronze" />
-                  <span>Suited for:</span>
+                <div className="space-y-2 bg-sand/30 p-4 rounded-xl border border-sand/60">
+                  <div className="flex items-center gap-2 text-xs font-sans text-espresso font-semibold">
+                    <Sparkles className="w-4 h-4 text-bronze" />
+                    <span>Suited for:</span>
+                  </div>
+                  <p className="text-[11px] font-sans text-mocha">
+                    Birthdays, Anniversaries, Special Milestones, and Celebrations.
+                  </p>
                 </div>
-                <p className="text-[11px] font-sans text-mocha">
-                  Birthdays, Anniversaries, Special Milestones, and Celebrations.
-                </p>
-              </div>
 
-              {/* Lead time notice */}
-              <div className="flex items-center gap-3 text-mocha text-xs font-sans bg-blush/20 p-3.5 rounded-xl border border-rose/30">
-                <Clock className="w-4 h-4 text-bronze flex-shrink-0" />
-                <p className="text-[11px]">
-                  <strong>Order Notice:</strong> Please order at least a week ahead for custom tier designs.
-                </p>
+                {/* Lead time notice */}
+                <div className="flex items-center gap-3 text-mocha text-xs font-sans bg-blush/20 p-3.5 rounded-xl border border-rose/30">
+                  <Clock className="w-4 h-4 text-bronze flex-shrink-0" />
+                  <p className="text-[11px]">
+                    <strong>Order Notice:</strong> Please order at least a week ahead for custom tier designs.
+                  </p>
+                </div>
               </div>
             </div>
 
-            {/* Bottom CTA */}
-            <div className="pt-8 border-t border-sand">
+            {/* Sticky Bottom CTA */}
+            <div className="p-6 border-t border-sand flex-shrink-0 bg-cream/95 backdrop-blur z-10">
               <Button
                 isWhatsApp
                 cakeName={cake.title}
                 onClick={onClose}
                 variant="filled-bronze"
-                className="w-full text-center py-3 text-xs"
+                className="w-full text-center py-3.5 text-xs font-semibold uppercase tracking-wider"
                 icon="arrow-right"
               >
                 Order this cake on WhatsApp
               </Button>
             </div>
-
           </motion.div>
         </div>
       </div>
