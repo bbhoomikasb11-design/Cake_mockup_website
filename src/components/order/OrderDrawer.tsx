@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Calendar, AlertTriangle, Send, Sparkles, CheckCircle2, MessageCircle, Mail, Clock } from 'lucide-react';
+import { X, AlertTriangle, Send, Sparkles, CheckCircle2, MessageCircle, Mail, Clock } from 'lucide-react';
 import { useOrder } from '@/context/OrderContext';
 import { menuFlavours, occasionOptions, weightOptions } from '@/content/menu';
 import { siteConfig } from '@/content/site';
@@ -432,7 +432,7 @@ export const OrderDrawer: React.FC = () => {
                     Order Details Sent!
                   </h3>
                   <p className="font-sans text-xs text-sand/90 leading-relaxed max-w-sm mx-auto">
-                    <strong>Next Step:</strong> Please attach your reference pictures directly in the WhatsApp chat with Neha.
+                    <strong>Almost there!</strong> Attach your reference pictures in the WhatsApp chat. Once you receive your pricing, complete the payment and share the screenshot to confirm your order.
                   </p>
                 </div>
 
@@ -458,7 +458,7 @@ export const OrderDrawer: React.FC = () => {
                     className="w-full py-2.5 px-4 rounded-full border border-sand/30 bg-espresso/50 hover:bg-bronze hover:border-bronze text-cream text-xs font-sans uppercase tracking-wider flex items-center justify-center gap-2 transition-all"
                   >
                     <MessageCircle className="w-4 h-4" />
-                    <span>Prefer to chat? Message on WhatsApp</span>
+                    <span>Prefer to chat? Message us on WhatsApp</span>
                   </a>
 
                   <a

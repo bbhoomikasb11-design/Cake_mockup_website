@@ -146,6 +146,7 @@ export const GalleryLightbox: React.FC<LightboxProps> = ({
               <Button
                 isWhatsApp
                 cakeName={item.title}
+                onClick={onClose}
                 variant="filled-bronze"
                 className="w-full text-center py-3 text-xs"
                 icon="arrow-right"

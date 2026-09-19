@@ -12,8 +12,8 @@ export const trackEvent = (eventName: string, params: Record<string, unknown> = 
       timestamp: new Date().toISOString(),
     });
 
-    // Console logging for debugging in development
-    if (import.meta.env.DEV) {
+    // Console logging in development mode
+    if (typeof process !== 'undefined' && process.env?.NODE_ENV !== 'production') {
       console.log(`[Analytics Event] ${eventName}:`, params);
     }
   }

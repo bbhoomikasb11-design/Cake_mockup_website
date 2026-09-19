@@ -96,6 +96,7 @@ export const CakeDetailDrawer: React.FC<CakeDetailDrawerProps> = ({ cake, onClos
               <Button
                 isWhatsApp
                 cakeName={cake.title}
+                onClick={onClose}
                 variant="filled-bronze"
                 className="w-full text-center py-3 text-xs"
                 icon="arrow-right"
